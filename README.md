@@ -14,9 +14,6 @@ A simple and secure Flask REST API for taking notes. It includes user registrati
 
 ---
 
-
----
-
 ## Security Testing (Basic)
 
 - Used **Postman** to test APIs and token-based auth
@@ -25,7 +22,32 @@ A simple and secure Flask REST API for taking notes. It includes user registrati
 - Auth bypass via invalid token
 - Reused/expired tokens
 
+---
 
+## Setup Instructions
+
+### Environment Setup
+
+```bash
+git clone https://github.com/yourusername/secure-notes-api.git
+cd secure-notes-api
+python -m venv venv
+venv\Scripts\activate  # or source venv/bin/activate
+pip install -r requirements.txt
+```
+
+### Create `.env` file:
+
+```env
+SECRET_KEY=your-secret-key
+DATABASE_URL=sqlite:///instance/notes.db
+```
+
+### Run the App:
+
+```bash
+flask run
+```
 
 
 
