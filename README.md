@@ -80,8 +80,8 @@ A security-focused notes-taking REST API built with **FastAPI**, demonstrating s
 | JWT Tampering          | Postman/Burp Suite | ✅ Invalid token rejected |
 | Tokenless Access       | Postman     | ✅ Access denied       |
 | Forced Browsing        | Burp Suite  | ✅ Access denied       |
-| Expired Token Handling | Manual Test | 🔄 Planned             |
-| CSRF                   | N/A (API only) | ❌ Not applicable  |
+
+
 
 **Screenshots and test results will be added soon**
 
