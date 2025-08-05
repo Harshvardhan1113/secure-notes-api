@@ -1,108 +1,70 @@
+
 # Secure Notes API – Project Report
 
-## Abstract
-
-The Secure Notes API is a Flask-based RESTful application that allows users to securely manage personal notes. It integrates user registration, JWT-based login, and full CRUD operations. The application also includes security testing to guard against common web vulnerabilities, aligning with OWASP recommendations.
 
 ---
 
-## Objectives
+## Project Overview
 
-- Build a secure and minimal REST API using Python and Flask
-- Implement user authentication using JWT
-- Enable note-taking with create, read, update, and delete operations
-- Apply basic OWASP security testing using tools like Burp Suite and Postman
+The **Secure Notes API** is a RESTful web service that provides users with secure access to create, store, and manage their personal notes. The application emphasizes secure development practices and has been tested for common web vulnerabilities to reflect real-world compliance, audit, and operational control environments.
 
 ---
 
-## Tech Stack
+## Key Functionalities
 
-| Layer           | Technology        |
-|----------------|-------------------|
-| Language        | Python 3          |
-| Framework       | Flask             |
-| Auth System     | JWT (via `pyjwt`) |
-| Database        | SQLite            |
-| Tools Used      | Postman, Burp Suite, Git, GitHub |
-| Deployment      | Localhost         |
+- **User Authentication** (Register/Login)
+- **JWT-based token management**
+- **Create, Read, Update, Delete** (CRUD) operations for personal notes
+- **Security hardened endpoints** using validation, error handling
 
 ---
 
-## Features
+## Security Implementation & Testing
 
-- User registration with password hashing
-- JWT-based login and token authentication
-- Protected routes for all note operations
-- Note ownership enforcement (user can only access their own notes)
-- SQLite database for simplicity and portability
+### Implemented Controls
+- Passwords stored using `bcrypt` hashing
+- Access control enforced at endpoint level via token scopes
+- Exception handling to prevent sensitive data exposure
+- Configs and secrets secured using `.env`
 
----
-
-## Security Testing
-
-Security tests were conducted using **Postman** and **Burp Suite** to simulate real-world attack vectors.
-
-### Test Cases Performed:
-
-| Test Type               | Description                                             | Result     |
-|------------------------|---------------------------------------------------------|------------|
-| SQL Injection (Login)  | Tried payloads like `' OR 1=1--`                        | ✅ Blocked |
-| Token Tampering        | Modified/expired tokens used on protected routes        | ✅ Blocked |
-| Missing Token Access   | Called protected endpoints without token                | ✅ Denied  |
-| Replay Attack          | Re-used same JWT token after logout                     | ✅ Token Valid (as expected) |
-| Header Manipulation    | Altered `Authorization` header formats                  | ✅ Blocked |
-| Authorization Bypass   | Accessed another user's notes using ID tampering        | ✅ Denied  |
+### Security Testing Tools
+- **Postman** for API request validation and auth flow
+- **Burp Suite** for vulnerability detection:
+  - SQL Injection
+  - Auth bypass attempts
+  - Improper token usage
+  - Session expiry testing
 
 ---
 
-## Setup Instructions
+## Risk Mapping Table
 
-### Environment Setup
-
-```bash
-git clone https://github.com/yourusername/secure-notes-api.git
-cd secure-notes-api
-python -m venv venv
-venv\Scripts\activate  # or source venv/bin/activate
-pip install -r requirements.txt
-```
-
-### Create `.env` file:
-
-```env
-SECRET_KEY=your-secret-key
-DATABASE_URL=sqlite:///instance/notes.db
-```
-
-### Run the App:
-
-```bash
-flask run
-```
+| Risk Domain | Mitigation in API |
+|-------------|-------------------|
+| **Authentication Flaws** | JWT handling, token expiry |
+| **Access Control Issues** | Endpoint-level role checks |
+| **Data Exposure** | No sensitive data in logs or responses |
+| **Injection Attacks** | Query validation + no raw queries |
+| **Security Misconfigurations** | Proper use of environment variables |
 
 ---
 
-## API Overview
+## Iteration & Improvement Plan
 
-| Endpoint           | Method | Description            | Auth Required |
-|--------------------|--------|------------------------|---------------|
-| `/register`        | POST   | Register a new user    | ❌            |
-| `/login`           | POST   | User login             | ❌            |
-| `/notes`           | GET    | List all notes         | ✅            |
-| `/notes`           | POST   | Create a new note      | ✅            |
-| `/notes/<id>`      | GET    | Get a note by ID       | ✅            |
-| `/notes/<id>`      | PUT    | Update a note          | ✅            |
-| `/notes/<id>`      | DELETE | Delete a note          | ✅            |
+- [ ] Add audit logging with timestamps and user IDs
+- [ ] Integrate automated unit tests with coverage reports
+- [ ] Implement admin/moderator role access
+- [ ] Move to production-grade DB (PostgreSQL)
+- [ ] Dockerize and deploy
+- [ ] Enable Swagger + OAuth2 flows
 
 ---
 
+## Outcome
 
-
-
-
-## Conclusion
-
-This project successfully demonstrates how to build a secure RESTful API using Flask and implement real-world protections against common vulnerabilities. It serves as a foundational backend system that can be extended to full-stack applications in the future.
+- Demonstrated hands-on understanding of secure software development  
+- Developed a system that can be extended into **secure corporate applications**
+- Relevant to **risk control**, **reporting**, and **compliance** tracks.
 
 ---
 
