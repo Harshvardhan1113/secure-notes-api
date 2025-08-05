@@ -1,116 +1,85 @@
 # Secure Notes API
 
-A security-focused notes-taking REST API built with **FastAPI**, demonstrating secure user authentication, token handling, and protected CRUD operations. Designed as a backend project to showcase principles of secure software development and API-level threat prevention.
+A secure and robust RESTful API built using Python and FastAPI for creating, storing, retrieving, and managing personal notes with **JWT-based user authentication**, **role-based access control**, and **input validation**. 
+
+>  Designed with a focus on **secure software development principles** to mitigate common vulnerabilities (OWASP Top 10) and ensure **confidentiality, integrity, and availability** of data.
+
+---
+
+## Overview
+
+This API mimics the secure storage mechanisms used in corporate tools by applying strict user authentication and secure access to sensitive resources (notes). It serves as a demonstration of secure backend development with real-world applications in **risk management, compliance, and secure operations**.
+
+---
+
+## Key Features
+
+- User registration and login
+- Secure JWT authentication
+- Create/read/update/delete (CRUD) personal notes
+- Password hashing with `bcrypt`
+- Role-based access (admin vs. user)
+- Proper error handling
+- Environment variable-based config management
 
 ---
 
 ## Tech Stack
 
-- **Python 3.11**
-- **FastAPI**
-- **OAuth2 with Password (Bearer Token)**
-- **JWT (JSON Web Tokens)**
-- **Bcrypt** (for password hashing)
-- **SQLite** (for lightweight data storage)
+- **Language**: Python
+- **Framework**: FastAPI
+- **Database**: SQLite (dev), PostgreSQL/MySQL (future)
+- **Authentication**: JWT (PyJWT)
+- **Security**: bcrypt, input validation, HTTP status handling
+- **Tools**: Postman, Burp Suite (for testing), GitHub
 
 ---
 
-## Features
+## Security Measures
 
-### User Authentication
-- User **Registration** and **Login** with hashed passwords
-- **JWT Token** generation and expiration handling
-- Authentication via **OAuth2 password flow**
-
-### Secure Notes Management
-- **CRUD operations** for personal notes
-- Routes are protected — only authenticated users can access their own notes
-
-### Security Measures
-- Passwords are stored securely with **bcrypt hashing**
-- Token-based route protection with FastAPI’s dependency injection
-- Prepared for **SQL Injection testing** and **auth bypass testing**
-- All endpoints return appropriate **HTTP status codes**
+| Threat | Control/Implementation |
+|-------|-------------------------|
+| Broken Authentication | JWT + password hashing |
+| Sensitive Data Exposure | Input validation + hashing |
+| Injection Attacks | ORM/parameterized queries |
+| Security Misconfig | `.env` for secrets, no secrets in code |
+| Insufficient Logging | Planned log handler integration |
+| Auth Bypass | Endpoint protection & token checks |
+| Session Issues | JWT expiry & refresh flow (planned) |
 
 ---
 
-## Installation & Setup
+## API Endpoints
 
-1. **Clone the repo**:
-   ```bash
-   git clone https://github.com/Harshvardhan1113/secure-notes-api.git
-   cd secure-notes-api
-   ```
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST   | /register | Register a new user |
+| POST   | /login    | Authenticate user and return token |
+| GET    | /notes    | Get all notes (user-specific) |
+| POST   | /notes    | Create a new note |
+| PUT    | /notes/{id} | Update a note |
+| DELETE | /notes/{id} | Delete a note |
 
-2. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Run the FastAPI server**:
-   ```bash
-   uvicorn main:app --reload
-   ```
-
-4. Visit:  
-   [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)  
-   for the auto-generated Swagger UI
+>  All routes except `/register` and `/login` require JWT authentication.
 
 ---
 
-## API Endpoints Overview
+## Testing
+Tested via Postman for CRUD and JWT handling.
 
-| Method | Endpoint        | Description              | Auth Required |
-|--------|------------------|--------------------------|---------------|
-| POST   | `/register`      | Create a new user        | ❌            |
-| POST   | `/token`         | Login & get token        | ❌            |
-| GET    | `/notes/`        | Get all notes            | ✅            |
-| POST   | `/notes/`        | Create a note            | ✅            |
-| GET    | `/notes/{id}`    | Get a specific note      | ✅            |
-| PUT    | `/notes/{id}`    | Update a note            | ✅            |
-| DELETE | `/notes/{id}`    | Delete a note            | ✅            |
-
----
-
-## Security Testing (In Progress)
-
-| Attack Type            | Tested With | Status                |
-|------------------------|-------------|------------------------|
-| SQL Injection          | Postman     | ✅ Blocked by ORM      |
-| JWT Tampering          | Postman/Burp Suite | ✅ Invalid token rejected |
-| Tokenless Access       | Postman     | ✅ Access denied       |
-| Forced Browsing        | Burp Suite  | ✅ Access denied       |
+- Security tested using Burp Suite:
+- SQL Injection
+- Auth bypass
+- Broken access control
+- Includes manual test cases for unauthorized access, tampered JWTs, and edge cases.
 
 
+## Installation
 
-**Screenshots and test results will be added soon**
+```bash
+git clone https://github.com/Harshvardhan1113/secure-notes-api.git
+cd secure-notes-api
+pip install -r requirements.txt
+uvicorn main:app --reload
 
----
 
-## Relevance to Security & Risk Roles
-
-This project demonstrates:
-- Secure backend design principles
-- API-level access control
-- Threat simulation and mitigation
-- Real-world auth workflows using OAuth2 + JWT
-
----
-
-## Screenshots (To be added)
-
-- Postman requests with and without token
-- Burp Suite scans for endpoint vulnerabilities
-- Token decoding and expiry handling
-
----
-
-## Future Enhancements
-
-- Role-based access (RBAC)
-- Token revocation & blacklist
-- Docker support
-- CI/CD integration for testing
-- Database migration support via Alembic
-
----
