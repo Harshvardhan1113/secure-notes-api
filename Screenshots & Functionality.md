@@ -6,22 +6,30 @@
 
 ## - Login to Get JWT Token
 #### Upon successful login, a JWT access token is issued. This token is required for all authenticated requests. The token includes:
-1. User identity
-2. Expiry timestamp
-3. Integrity via a secret key
+- User identity
+- Expiry timestamp
+- Integrity via a secret key
 ---
 
 ## - Create a Note
 #### A logged-in user can create personal notes using the /notes endpoint. The request body includes:
-1. title
-2. content
-These notes are stored securely and linked to the authenticated user.
+- title
+- content
+- These notes are stored securely and linked to the authenticated user.
 ---
 
 ## Delete a Note
 
 #### Users can delete their own notes using the note's unique ID. Proper checks ensure:
-1. Only the owner can delete their notes
-2. Unauthorized deletion attempts are blocked
+- Only the owner can delete their notes
+- Unauthorized deletion attempts are blocked
 ---
 
+## Testing
+Tested via Postman for CRUD and JWT handling.
+
+- Security tested using Burp Suite:
+- SQL Injection
+- Auth bypass
+- Broken access control
+- Includes manual test cases for unauthorized access, tampered JWTs, and edge cases.
